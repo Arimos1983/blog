@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class Postcontroller extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', ['except'=>['index','show']]);
+    }
     public function index()
     {
         $posts = Post::all();
@@ -45,7 +49,8 @@ class Postcontroller extends Controller
             [
                 "title" => request('title'),
                 "body" => request('body'),
-                "published" => (bool)request('published')
+                "published" => (bool)request('published'),
+                "user_id" => auth()->user()->id
             ]
             );
 
