@@ -8,7 +8,7 @@ class Post extends Model
 {
     protected $fillable = [
 
-        "title", "body" , "published"
+        "title", "body" , "published" , "user_id"
     ];
     protected function published()
     {
@@ -23,5 +23,9 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }

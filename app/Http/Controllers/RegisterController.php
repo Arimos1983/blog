@@ -10,6 +10,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->middleware('age',['only' => 'store']);
     }
     public function create()
     {
@@ -21,12 +22,14 @@ class RegisterController extends Controller
             "name"=>"required",
             "email"=>"required|email|unique:users",
             "password"=>"required|min:6"
+            
         ]);
 
        $user = User::create([
             'name'=>request('name'),
             'email'=>request('email'),
-            'password'=>bcrypt(request('password'))
+            'password'=>bcrypt(request('password')),
+            'age'=>request('age')
         ]);
 
         auth()->login($user);  //ugradena funkcija za ogovanje usera

@@ -8,11 +8,13 @@
     @endif
     @foreach($posts as $post)
         <div class="blog-post">
-            <a href="{{'/posts/'.$post->id}}" >
-            <h2 class="blog-post-title">{{$post->title}}</h2>
-            </a>
-            <p class="blog-post-meta">January 1, 2014 by <a href="#">{{$post->user->name}}</a></p>
 
+            <a href="{{'/posts/'.$post->id}}" >
+                <h2 class="blog-post-title">{{$post->title}}</h2>
+            </a>
+            @if($post->user)
+            <p class="blog-post-meta">January 1, 2014 by <a href="{{'/users/'. $post->user->id}}">{{$post->user->name}}</a></p>
+            @endif
             {{ $post->body}}
         </div><!-- /.blog-post -->
     @endforeach

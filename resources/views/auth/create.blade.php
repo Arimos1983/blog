@@ -30,6 +30,11 @@
                 <input name="password" type="password" class="form-control" id="password" >
                 @include("partials.error-message", ["fieldName" => "password"])
             </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input name="age" type="numer" class="form-control" id="age" >
+                @include("partials.error-message", ["fieldName" => "password"])
+            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 
