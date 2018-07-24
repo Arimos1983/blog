@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use App\Tag;
 
 class Postcontroller extends Controller
 {
@@ -13,8 +14,8 @@ class Postcontroller extends Controller
     }
     public function index()
     {
-        $posts = Post::all();
-        return view('posts.index', compact('posts'));
+        $posts = Post::with('user')->latest()->paginate(10);
+        return view('posts.index', ['posts'=> $posts]);
     }
 
     public function show($id)
@@ -26,7 +27,8 @@ class Postcontroller extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        $tags = Tag::all();
+        return view('posts.create', compact('tags'));
     }
 
     public function store()
@@ -34,7 +36,8 @@ class Postcontroller extends Controller
 
         $this->validate(request(), [ 
             "title"=>"required",
-            "body"=>"required"
+            "body"=>"required",
+            "tags"=>"required|array"
         ]);
 
        /* $post = new Post();
@@ -45,14 +48,17 @@ class Postcontroller extends Controller
         $post->save();  */
 
 
-        Post::create(
+        $post = Post::create(
             [
                 "title" => request('title'),
                 "body" => request('body'),
                 "published" => (bool)request('published'),
                 "user_id" => auth()->user()->id
+                
             ]
             );
+
+        $post->tags()->attach(request('tags'));
 
         return redirect('/posts');
     }

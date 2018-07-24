@@ -31,6 +31,19 @@
                 <input name="published" value="1" type="checkbox" class="form-check-input" id="published">
                 <label class="form-check-label" for="published">Published</label>
             </div>
+            @if (count($tags))
+
+                <div>
+                    <label for='tags'>
+                    tags
+                    </lable>
+                    @foreach($tags as $tag)
+                    <input type='checkbox' class='form-control' id='tag' name='tags[]' value='{{$tag->id}}' >
+                        {{$tag->name}}
+                    @endforeach
+                </div>
+
+            @endif
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 
